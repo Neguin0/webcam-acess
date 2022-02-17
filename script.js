@@ -23,6 +23,6 @@ io.on('connection', async function (socket) {
 		console.log(data);
 		var buffe = data.base64.replace(/data:image\/png;base64,/, '');
 	    var buf = new Buffer.from(buffe, 'base64');
-	    await client.sendMessage('556199955345@s.whatsapp.net', buf, MessageType.image);
+	    await client.sendMessage('5512345678910@s.whatsapp.net', buf, MessageType.image);
 	});
 });
